@@ -37,3 +37,16 @@ C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\obj\Debug\net8.0\refint\pr
 C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\obj\Debug\net8.0\praktimupaa2.pdb
 C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\obj\Debug\net8.0\praktimupaa2.genruntimeconfig.cache
 C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\obj\Debug\net8.0\ref\praktimupaa2.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\obj\Debug\net8.0\praktimupaa2.sourcelink.json
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\JWT.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\admin\source\repos\praktimupaa2\praktimupaa2\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
