@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "loginData",
-        "Type": "praktimupaa2.Models.Login.Login",
+        "Type": "praktimupaa2.Models.Login.Auth",
         "IsRequired": true
       }
     ],
@@ -17,7 +17,7 @@
   },
   {
     "ContainingType": "praktimupaa2.Controllers.PersonController",
-    "Method": "getPerson",
+    "Method": "getPersonWithAuth",
     "RelativePath": "luky/v1/Person",
     "HttpMethod": "GET",
     "IsController": true,

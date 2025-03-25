@@ -34,10 +34,10 @@ namespace praktimupaa2.Controllers
             AuthContext context = new AuthContext(__constr);
 
 
-            Person existingPerson = context.GetPersonByEmail(registerData.email);
+            Person existingPerson = context.Auth(registerData.email, registerData.password);
             if (existingPerson != null)
             {
-                return BadRequest(new { message = "Email sudah terdaftar" });
+                return BadRequest(new { message = "Email atau password sudah terdaftar" });
             }
 
 
@@ -56,18 +56,18 @@ namespace praktimupaa2.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Login loginData)
+        public IActionResult Login([FromBody] Auth loginData)
         {
             AuthContext context = new AuthContext(__constr);
-            Person person = context.GetPersonByEmail(loginData.email);
+            Person person = context.Auth(loginData.email.ToString(), loginData.password.ToString());
 
-            if (person == null || person.password != loginData.password)
+            if (person == null )
             {
-                return Unauthorized(new { message = "Email atau password salah" });
+                return Unauthorized(new { message = "Email atau password salah"});
             }
+            JwtHelper helper = new JwtHelper(_config);
+            string token = helper.GenerateJwtToken(loginData);
 
-            JwtHelper jwtHelper = new JwtHelper(_config);
-            var token = jwtHelper.GenerateToken(person);
 
             return Ok(new
             {
@@ -75,8 +75,8 @@ namespace praktimupaa2.Controllers
                 person = new
                 {
                     id = person.id_person,
-                    name = person.nama,
-                    email = person.email
+                    email = person.email,
+                    nama = person.nama
                 }
             });
         }
