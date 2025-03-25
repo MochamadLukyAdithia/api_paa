@@ -65,6 +65,7 @@ namespace praktimupaa2.Controllers
             {
                 return Unauthorized(new { message = "Email atau password salah"});
             }
+          
             JwtHelper helper = new JwtHelper(_config);
             string token = helper.GenerateJwtToken(loginData);
 

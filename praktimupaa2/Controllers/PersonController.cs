@@ -15,7 +15,7 @@ namespace praktimupaa2.Controllers
             _consStr = configuration.GetConnectionString("DefaultConnection");
         }
         [HttpGet,Authorize]
-        public  ActionResult<Student> getPersonWithAuth()
+        public  ActionResult<Person> getPersonWithAuth()
         {
             PersonContext context = new PersonContext(_consStr);
             List<Person> result = context.getPersonWithAuth(); 

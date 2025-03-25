@@ -93,32 +93,65 @@ namespace praktimupaa2.Models.Auth
 
         public bool RegisterPerson(Person.Person person)
         {
+            if (person == null)
+            {
+                throw new ArgumentNullException(nameof(person), "Person object cannot be null.");
+            }
+
+            if (person.id_peran == null)
+            {
+                throw new ArgumentNullException(nameof(person.id_peran), "id_peran cannot be null.");
+            }
+
             bool result = false;
-            string query = string.Format(@"INSERT INTO person (nama, alamat, email, password) 
-                                  VALUES (@nama, @alamat, @email, @password)");
-            postgresHelper db = new postgresHelper(this._constr);
+
+            string query = @"INSERT INTO person (nama, alamat, email, password) 
+                     VALUES (@nama, @alamat, @email, @password) 
+                     RETURNING id_person;";
 
             try
             {
-                NpgsqlCommand cmd = db.GetNpgsqlCommand(query);
-                cmd.Parameters.AddWithValue("@nama", person.nama);
-                cmd.Parameters.AddWithValue("@alamat", person.alamat);
-                cmd.Parameters.AddWithValue("@email", person.email);
-                cmd.Parameters.AddWithValue("@password", person.password);
+            
+                postgresHelper db = new postgresHelper(this._constr);
+                using (NpgsqlCommand cmd = db.GetNpgsqlCommand(query))
+                {
+                    cmd.Parameters.AddWithValue("@nama", person.nama);
+                    cmd.Parameters.AddWithValue("@alamat", person.alamat);
+                    cmd.Parameters.AddWithValue("@email", person.email);
+                    cmd.Parameters.AddWithValue("@password", person.password);
 
-                int rowsAffected = cmd.ExecuteNonQuery();
-                result = rowsAffected > 0;
+                    object resultObj = cmd.ExecuteScalar();
+                   
+                    if (resultObj == null)
+                    {
+                        Console.WriteLine("Failed to retrieve id_person. Insert might have failed.");
+                        return false;
+                    }
 
-                cmd.Dispose();
-                db.closeConnection();
+                    int idPerson = Convert.ToInt32(resultObj);
+                    Console.WriteLine("Inserted id_person: " + idPerson);
+
+                    string queryPeran = @"INSERT INTO peran_person (id_peran, id_person) VALUES(@id_peran, @id_person);";
+                    postgresHelper dbPeran = new postgresHelper(this._constr);
+                    using (NpgsqlCommand cmdPeran = dbPeran.GetNpgsqlCommand(queryPeran))
+                    {
+                        cmdPeran.Parameters.AddWithValue("@id_peran", person.id_peran);
+                        cmdPeran.Parameters.AddWithValue("@id_person", idPerson);
+                        cmdPeran.ExecuteNonQuery();
+                    }
+
+                    result = true;
+                }
             }
             catch (Exception ex)
             {
-                _errorMsg = ex.Message;
-                Console.WriteLine("Error in RegisterPerson: " + ex.Message);
+                Console.WriteLine("Error in RegisterPerson: " + ex.ToString());
             }
 
             return result;
         }
+
+
+
     }
 }
