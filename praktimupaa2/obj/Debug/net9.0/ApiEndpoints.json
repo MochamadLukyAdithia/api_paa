@@ -25,7 +25,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "praktimupaa2.Models.Student.Student",
+        "Type": "praktimupaa2.Models.Person.Person",
         "MediaTypes": [
           "text/plain",
           "application/json",
