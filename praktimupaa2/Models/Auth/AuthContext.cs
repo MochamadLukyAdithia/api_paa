@@ -93,6 +93,7 @@ namespace praktimupaa2.Models.Auth
 
         public bool RegisterPerson(Person.Person person)
         {
+            int id_peran = 0;
             if (person == null)
             {
                 throw new ArgumentNullException(nameof(person), "Person object cannot be null.");
@@ -120,6 +121,21 @@ namespace praktimupaa2.Models.Auth
                     cmd.Parameters.AddWithValue("@email", person.email);
                     cmd.Parameters.AddWithValue("@password", person.password);
 
+
+                    string queryIdPeran = @"SELECT id_peran FROM peran where nama_peran = @nama_peran";
+                    postgresHelper postgresHelper = new postgresHelper(this._constr);
+                    using (NpgsqlCommand npgsqlCommand = postgresHelper.GetNpgsqlCommand(queryIdPeran))
+                    {
+                        npgsqlCommand.Parameters.AddWithValue("@nama_peran", person.nama_peran);
+                        using (NpgsqlDataReader reader = npgsqlCommand.ExecuteReader()) {
+                            if (reader.Read())
+                            {
+                                id_peran = reader.GetInt32(0);
+                            }
+                        
+                        }
+                    }
+
                     object resultObj = cmd.ExecuteScalar();
                    
                     if (resultObj == null)
@@ -135,7 +151,7 @@ namespace praktimupaa2.Models.Auth
                     postgresHelper dbPeran = new postgresHelper(this._constr);
                     using (NpgsqlCommand cmdPeran = dbPeran.GetNpgsqlCommand(queryPeran))
                     {
-                        cmdPeran.Parameters.AddWithValue("@id_peran", person.id_peran);
+                        cmdPeran.Parameters.AddWithValue("@id_peran", id_peran);
                         cmdPeran.Parameters.AddWithValue("@id_person", idPerson);
                         cmdPeran.ExecuteNonQuery();
                     }
