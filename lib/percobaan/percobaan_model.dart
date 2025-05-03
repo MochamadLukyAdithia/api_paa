@@ -22,7 +22,7 @@ class Produk {
   });
 
   Produk.fromJson(Map<dynamic, dynamic> json) {
-    id = json['id'] as int?;  
+    id = json['id'] as int?;
     title = json['title'];
     description = json['description'];
     category = json['category'];

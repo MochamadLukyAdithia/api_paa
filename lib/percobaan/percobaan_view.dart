@@ -103,19 +103,19 @@ class PercobaanView extends StatelessWidget {
                                         color: Colors.teal[700],
                                       ),
                                     ),
-                                    // if (product.discountPercentage != null &&
-                                    //     product.discountPercentage! > 0)
-                                    //   Padding(
-                                    //     padding: const EdgeInsets.only(left: 8),
-                                    //     child: Text(
-                                    //       "-${product.discountPercentage!.toStringAsFixed(1)}%",
-                                    //       style: const TextStyle(
-                                    //         fontSize: 14,
-                                    //         color: Colors.red,
-                                    //         fontWeight: FontWeight.bold,
-                                    //       ),
-                                    //     ),
-                                    //   ),
+                                    if (product.discountPercentage != null &&
+                                        product.discountPercentage! > 0)
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        child: Text(
+                                          "-${product.discountPercentage!.toStringAsFixed(1)}%",
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     const Spacer(),
                                     Row(
                                       children: [
