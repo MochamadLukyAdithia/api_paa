@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using praktimupaa2.Models.Person;
 using praktimupaa2.Models.Student;
 
@@ -13,13 +14,14 @@ namespace praktimupaa2.Controllers
             IConfiguration configuration) {
             _consStr = configuration.GetConnectionString("DefaultConnection");
         }
-        [HttpGet]
-        public  ActionResult<Student> getPerson()
+        [HttpGet,Authorize]
+        public  ActionResult<Person> getPersonWithAuth()
         {
             PersonContext context = new PersonContext(_consStr);
-            List<Person> result = context.allPerson(); 
+            List<Person> result = context.getPersonWithAuth(); 
             return Ok(result);
         }
+
 
 
     }

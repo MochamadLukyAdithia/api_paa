@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using praktimupaa2.Models.Login;
 using praktimupaa2.Models.Person;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,6 +9,7 @@ namespace praktimupaa2.Helpers
 {
     public class JwtHelper
     {
+
         private readonly IConfiguration _configuration;
 
         public JwtHelper(IConfiguration configuration)
@@ -15,24 +17,24 @@ namespace praktimupaa2.Helpers
             _configuration = configuration;
         }
 
-        public string GenerateToken(Person person)
+        public string GenerateJwtToken(Auth auth)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
             {
-                Subject = new ClaimsIdentity(new[]
-                {
+        new Claim(ClaimTypes.NameIdentifier, auth.email),
+        new Claim(ClaimTypes.Role, auth.password)   
+    };
 
-                    new Claim("id_person", person.id_person.ToString()),
-                    new Claim(ClaimTypes.Email, person.email),
-                    new Claim(ClaimTypes.Name, person.nama),
-                }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }
